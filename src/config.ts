@@ -13,6 +13,7 @@ export const CONFIGURATION_ALIGN_PORT_SIGN = "align.port"; // Boolean
 export const CONFIGURATION_ALIGN_FUNCTION_SIGN = "align.function"; // Boolean
 export const CONFIGURATION_ALIGN_PROCEDURE_SIGN = "align.procedure"; // Boolean
 export const CONFIGURATION_ALIGN_GENERIC_SIGN = "align.generic"; // Boolean
+export const CONFIGURATION_ALIGN_COMMENTS = "align.comments"; // Boolean
 export const CONFIGURATION_ALIGN_SIGN_MODE = "align.mode"; // AlignMode
 export const CONFIGURATION_NEWLINE_AFTER_PORT = "newline.port"; // NewLineConfig
 export const CONFIGURATION_NEWLINE_AFTER_THEN = "newline.then"; // NewLineConfig
@@ -21,6 +22,7 @@ export const CONFIGURATION_NEWLINE_AFTER_ELSE = "newline.else"; // NewLineConfig
 export const CONFIGURATION_NEWLINE_AFTER_GENERIC = "newline.generic"; // NewLineConfig
 export const CONFIGURATION_CASE_KEYWORD = "case.keyword"; // CaseType
 export const CONFIGURATION_CASE_TYPENAME = "case.typename"; // CaseType
+export const CONFIGURATION_INDENTATION = "indentation"; // String
 
 enum AlignMode {
 	Local,// = "local",
@@ -54,6 +56,10 @@ function getEndOfLine() {
 }
 
 function getIndentation(options) {
+	if (vscode.workspace.getConfiguration(CONFIGURATION_KEY, null).has(CONFIGURATION_INDENTATION)) {
+		return vscode.workspace.getConfiguration(CONFIGURATION_KEY, null).get<string>(CONFIGURATION_INDENTATION);
+	}
+	
 	if (!options.insertSpaces) return "\t";
 	var tabSize = options.tabSize;
 	if (tabSize < 1) tabSize = 4;
@@ -82,6 +88,7 @@ export function getConfig(options: vscode.FormattingOptions): VHDLFormatter.Beau
 	const alignFunctionSign = getExtSettings<boolean>(CONFIGURATION_ALIGN_FUNCTION_SIGN, false);
 	const alignProcedureSign = getExtSettings<boolean>(CONFIGURATION_ALIGN_PROCEDURE_SIGN, false);
 	const alignGenericSign = getExtSettings<boolean>(CONFIGURATION_ALIGN_GENERIC_SIGN, false);
+	const alignComments = getExtSettings<boolean>(CONFIGURATION_ALIGN_COMMENTS, false);
 	const signAlignMode = getExtSettings<AlignMode>(CONFIGURATION_ALIGN_SIGN_MODE, AlignMode.Local).toString().toLowerCase();
 
 	const keywordCase = getExtSettings<CaseType>(CONFIGURATION_CASE_KEYWORD, CaseType.UpperCase).toString().toLowerCase();
@@ -105,6 +112,6 @@ export function getConfig(options: vscode.FormattingOptions): VHDLFormatter.Beau
 		signAlignKeywords.push("IMPURE FUNCTION");
 	}
 
-	const alignSettings = new VHDLFormatter.signAlignSettings(signAlignKeywords.length > 0, alignAllSign, signAlignMode, signAlignKeywords)
+	const alignSettings = new VHDLFormatter.signAlignSettings(signAlignKeywords.length > 0, alignAllSign, signAlignMode, signAlignKeywords, alignComments)
 	return new VHDLFormatter.BeautifierSettings(removeComments, removeReports, checkAlias, alignSettings, keywordCase, typenameCase, indentation, newLineSettings, endOfLine, addNewLine);
 }

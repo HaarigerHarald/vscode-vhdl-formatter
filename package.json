@@ -2,8 +2,8 @@
 	"name": "vhdl-formatter",
 	"displayName": "VHDL Formatter",
 	"description": "",
-	"version": "1.0.5",
-	"publisher": "Vinrobot",
+	"version": "1.0.6",
+	"publisher": "HaarigerHarald",
 	"engines": {
 		"vscode": "^1.25.0"
 	},
@@ -12,7 +12,7 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Vinrobot/vscode-vhdl-formatter.git"
+		"url": "https://github.com/HaarigerHarald/vscode-vhdl-formatter.git"
 	},
 	"activationEvents": [
 		"onLanguage:vhdl"
@@ -70,6 +70,11 @@
 					"description": ""
 				},
 				"vhdl.formatter.align.generic": {
+					"type": "boolean",
+					"default": false,
+					"description": ""
+				},
+				"vhdl.formatter.align.comments": {
 					"type": "boolean",
 					"default": false,
 					"description": ""
@@ -152,17 +157,20 @@
 						"None"
 					],
 					"description": ""
+				},
+				"vhdl.formatter.indentation": {
+					"type": "string",
+					"description": "Overwrite tab size with indentation"
 				}
 			}
 		}
 	},
 	"scripts": {
-		"postinstall": "node ./node_modules/vscode/bin/install && tsc",
+		"postinstall": "tsc",
 		"compile": "tsc"
 	},
 	"devDependencies": {
-		"@types/node": "^8.10.43",
-		"typescript": "^3.9.7",
-		"vscode": "^1.1.37"
+		"typescript": "^4.6.3",
+		"@types/vscode": "^1.66.0"
 	}
 }
