@@ -1,11 +1,11 @@
 {
 	"name": "vhdl-formatter",
-	"displayName": "VHDL Formatter",
+	"displayName": "VHDL Formatter++",
 	"description": "",
 	"version": "1.0.6",
 	"publisher": "HaarigerHarald",
 	"engines": {
-		"vscode": "^1.25.0"
+		"vscode": "^1.66.0"
 	},
 	"categories": [
 		"Formatters"
@@ -43,6 +43,21 @@
 					"type": "boolean",
 					"default": false,
 					"description": "Insert a final new line at the end of the file when formatting. Prefer files.insertFinalNewline."
+				},
+				"vhdl.formatter.remove.comments": {
+					"type": "boolean",
+					"default": false,
+					"description": ""
+				},
+				"vhdl.formatter.remove.blankLines": {
+					"type": "boolean",
+					"default": false,
+					"description": ""
+				},
+				"vhdl.formatter.remove.reports": {
+					"type": "boolean",
+					"default": false,
+					"description": ""
 				},
 				"vhdl.formatter.replaceByAliases": {
 					"type": "boolean",
@@ -160,7 +175,7 @@
 				},
 				"vhdl.formatter.indentation": {
 					"type": "string",
-					"description": "Overwrite tab size with indentation"
+					"description": "Overwrite tab size with custom indentation"
 				}
 			}
 		}

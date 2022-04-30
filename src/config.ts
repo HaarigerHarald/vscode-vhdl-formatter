@@ -5,8 +5,9 @@ import * as VHDLFormatter from './VHDLFormatter/VHDLFormatter';
 
 export const CONFIGURATION_KEY = "vhdl.formatter";
 export const CONFIGURATION_INSERT_FINAL_NEW_LINE = "insertFinalNewline"; // Boolean
-export const CONFIGURATION_REMOVE_COMMENTS = "removeComments"; // Boolean
-export const CONFIGURATION_REMOVE_REPORTS = "removeReports"; // Boolean
+export const CONFIGURATION_REMOVE_COMMENTS = "remove.comments"; // Boolean
+export const CONFIGURATION_REMOVE_BLANK_LINES = "remove.blankLines"; // Boolean
+export const CONFIGURATION_REMOVE_REPORTS = "remove.reports"; // Boolean
 export const CONFIGURATION_CHECK_ALIAS = "replaceByAliases"; // Boolean
 export const CONFIGURATION_ALIGN_ALL_SIGN = "align.all"; // Boolean
 export const CONFIGURATION_ALIGN_PORT_SIGN = "align.port"; // Boolean
@@ -24,49 +25,58 @@ export const CONFIGURATION_CASE_KEYWORD = "case.keyword"; // CaseType
 export const CONFIGURATION_CASE_TYPENAME = "case.typename"; // CaseType
 export const CONFIGURATION_INDENTATION = "indentation"; // String
 
-enum AlignMode {
+enum AlignMode
+{
 	Local,// = "local",
 	Global,// = "global"
 }
 
-enum CaseType {
+enum CaseType
+{
 	UpperCase,// = "UpperCase",
 	LowerCase,// = "LowerCase",
 	DefaultCase,// = "DefaultCase"
 }
 
-enum NewLineConfig {
+enum NewLineConfig
+{
 	NewLine,// = "NewLine",
 	NoNewLine,// = "NoNewLine",
 	None,// = "None"
 }
 
-export function getSettings<T>(section: string, key: string, defaultValue?: T): T {
+export function getSettings<T>(section: string, key: string, defaultValue?: T): T
+{
 	return vscode.workspace.getConfiguration(section, null).get<T>(key, defaultValue as T);
 }
 
-export function getExtSettings<T>(key: string, defaultValue?: T): T {
+export function getExtSettings<T>(key: string, defaultValue?: T): T
+{
 	return getSettings<T>(CONFIGURATION_KEY, key, defaultValue);
 }
 
-function getEndOfLine() {
+function getEndOfLine()
+{
 	var endOfLine = getSettings<string>("files", "eol", "\n");
 	var isValid = endOfLine == "\r\n" || endOfLine == "\n";
 	return isValid ? endOfLine : "\n";
 }
 
-function getIndentation(options) {
-	if (vscode.workspace.getConfiguration(CONFIGURATION_KEY, null).has(CONFIGURATION_INDENTATION)) {
+function getIndentation(options)
+{
+	if (vscode.workspace.getConfiguration(CONFIGURATION_KEY, null).has(CONFIGURATION_INDENTATION))
+	{
 		return vscode.workspace.getConfiguration(CONFIGURATION_KEY, null).get<string>(CONFIGURATION_INDENTATION);
 	}
-	
+
 	if (!options.insertSpaces) return "\t";
 	var tabSize = options.tabSize;
 	if (tabSize < 1) tabSize = 4;
 	return " ".repeat(tabSize);
 }
 
-export function getConfig(options: vscode.FormattingOptions): VHDLFormatter.BeautifierSettings {
+export function getConfig(options: vscode.FormattingOptions): VHDLFormatter.BeautifierSettings
+{
 	if (!options) options = { insertSpaces: false, tabSize: 4 };
 
 	const indentation = getIndentation(options);
@@ -107,11 +117,12 @@ export function getConfig(options: vscode.FormattingOptions): VHDLFormatter.Beau
 	if (alignGenericSign) signAlignKeywords.push("GENERIC");
 	if (alignPortSign) signAlignKeywords.push("PORT");
 	if (alignProcedureSign) signAlignKeywords.push("PROCEDURE");
-	if (alignFunctionSign) {
+	if (alignFunctionSign)
+	{
 		signAlignKeywords.push("FUNCTION");
 		signAlignKeywords.push("IMPURE FUNCTION");
 	}
 
-	const alignSettings = new VHDLFormatter.signAlignSettings(signAlignKeywords.length > 0, alignAllSign, signAlignMode, signAlignKeywords, alignComments)
+	const alignSettings = new VHDLFormatter.signAlignSettings(signAlignKeywords.length > 0, alignAllSign, signAlignMode, signAlignKeywords, alignComments);
 	return new VHDLFormatter.BeautifierSettings(removeComments, removeReports, checkAlias, alignSettings, keywordCase, typenameCase, indentation, newLineSettings, endOfLine, addNewLine);
 }

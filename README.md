@@ -1,10 +1,10 @@
-# VSCode VHDL Formatter
+# VSCode VHDL Formatter++
 
-Fork of [vscode-vhdl-formatter](https://github.com/Vinrobot/vscode-vhdl-formatter) by vinrobot with more config options and updated dependencies, since the original project is no longer maintained.
+Fork of [VSCode VHDL Formatter](https://github.com/Vinrobot/vscode-vhdl-formatter) by Vinrobot with more config options and updated dependencies, since the original project is no longer maintained.
 
 ## Installation
 
-Open command palette F1 and select Extensions: Install Extension, then search for 'VHDL Formatter'.
+Open command palette F1 and select Extensions: Install Extension, then search for 'VHDL Formatter++'.
 
 ## Usage
 
@@ -20,7 +20,7 @@ And type `Format Document`
 - macOS: `SHIFT` + `OPTION` + `F`
 - Windows: `SHIFT` + `ALT` + `F`
 
-If you don't like the default shortcuts, you can rebind `editor.action.formatDocument`in the keyboard shortcuts menu of VSCode.
+If you don't like the default shortcuts, you can rebind `editor.action.formatDocument` in the keyboard shortcuts menu of VSCode.
 
 ## Configuration
 
@@ -46,6 +46,10 @@ If you don't like the default shortcuts, you can rebind `editor.action.formatDoc
 | `vhdl.formatter.newline.semicolon`   | `NewLine`   | `NewLine/NoNewLine/None` |
 | `vhdl.formatter.newline.else`        | `NewLine`   | `NewLine/NoNewLine/None` |
 | `vhdl.formatter.newline.generic`     | `None`      | `NewLine/NoNewLine/None` |
+|                                      |             |                          |
+| `vhdl.formatter.remove.comments`     | `false`     | `true/false`             |
+| `vhdl.formatter.remove.blankLines`   | `false`     | `true/false`             |
+| `vhdl.formatter.remove.reports`      | `false`     | `true/false`             |
 
 
 ## Credits
