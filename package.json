@@ -2,7 +2,7 @@
 	"name": "vhdl-formatter-pp",
 	"displayName": "VHDL Formatter++",
 	"description": "",
-	"version": "1.0.19",
+	"version": "1.0.20",
 	"publisher": "HaarigerHarald",
 	"engines": {
 		"vscode": "^1.84.0"
